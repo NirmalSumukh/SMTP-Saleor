@@ -23,6 +23,9 @@ services:
       # you might need to add it to 'networks' above and uncomment this:
       # - SALEOR_API_URL=http://saleor-api:8000/graphql/
 
+    volumes:
+      - smtp-apl-data:/app/data
+
     labels:
       - "traefik.enable=true"
 
@@ -43,3 +46,6 @@ services:
 networks:
   proxy-network:
     external: true
+
+volumes:
+  smtp-apl-data:
