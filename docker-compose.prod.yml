@@ -22,6 +22,7 @@ services:
       - ALLOWED_DOMAIN_PATTERN=${ALLOWED_DOMAIN_PATTERN}
       # URL Configuration for Subpath
       - APP_API_BASE_URL=https://saleor.leemasmart.com/smtp
+      - APP_IFRAME_BASE_URL=https://saleor.leemasmart.com/smtp
       # If you maintain a separate internal network for Saleor, 
       # you might need to add it to 'networks' above and uncomment this:
       # - SALEOR_API_URL=http://saleor-api:8000/graphql/
