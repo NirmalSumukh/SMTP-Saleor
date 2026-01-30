@@ -15,6 +15,9 @@ services:
       - PORT=3010
       - SECRET_KEY=${SECRET_KEY}
       - APP_LOG_LEVEL=info
+      # APL Configuration
+      - APL=file
+      - FILE_APL_PATH=data/.apl-data.json
       # Allow installation on your specific domain
       - ALLOWED_DOMAIN_PATTERN=${ALLOWED_DOMAIN_PATTERN}
       # URL Configuration for Subpath
