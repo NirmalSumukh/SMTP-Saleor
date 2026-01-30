@@ -57,11 +57,18 @@ export default wrapWithLoggerContext(
       async onRequestVerified(req, { authData: { token, saleorApiUrl }, respondWithError }) {
         const logger = createLogger("onRequestVerified");
 
+        // Workaround: If Saleor reports HTTP, force HTTPS to avoid 308 Redirect issues in node-fetch
+        // which can cause the installation to fail if the app is behind the same proxy.
+        const secureSaleorApiUrl = saleorApiUrl.replace("http://", "https://");
+        if (saleorApiUrl !== secureSaleorApiUrl) {
+          logger.info({ saleorApiUrl, secureSaleorApiUrl }, "Upgrading Saleor API URL to HTTPS");
+        }
+
         let saleorVersion: string;
 
         try {
           const client = createInstrumentedGraphqlClient({
-            saleorApiUrl: saleorApiUrl,
+            saleorApiUrl: secureSaleorApiUrl,
             token: token,
           });
 
