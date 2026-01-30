@@ -1,0 +1,61 @@
+{
+  "$schema": "https://turbo.build/schema.v2.json",
+  "globalEnv": [
+    "ALLOWED_DOMAIN_PATTERN",
+    "APL",
+    "APP_API_BASE_URL",
+    "APP_IFRAME_BASE_URL",
+    "APP_LOG_LEVEL",
+    "AWS_ACCESS_KEY_ID",
+    "AWS_REGION",
+    "AWS_SECRET_ACCESS_KEY",
+    "DYNAMODB_CONNECTION_TIMEOUT_MS",
+    "DYNAMODB_MAIN_TABLE_NAME",
+    "DYNAMODB_REQUEST_TIMEOUT_MS",
+    "ENV",
+    "FALLBACK_SMTP_ENCRYPTION",
+    "FALLBACK_SMTP_HOST",
+    "FALLBACK_SMTP_PASSWORD",
+    "FALLBACK_SMTP_PORT",
+    "FALLBACK_SMTP_SENDER_EMAIL",
+    "FALLBACK_SMTP_SENDER_NAME",
+    "FALLBACK_SMTP_USER",
+    "FILE_APL_PATH",
+    "MANIFEST_APP_ID",
+    "NEXT_PUBLIC_SENTRY_DSN",
+    "NEXT_RUNTIME",
+    "NODE_ENV",
+    "OTEL_ACCESS_TOKEN",
+    "OTEL_ENABLED",
+    "OTEL_SERVICE_NAME",
+    "PORT",
+    "REPOSITORY_URL",
+    "REST_APL_ENDPOINT",
+    "REST_APL_TOKEN",
+    "SECRET_KEY",
+    "SENTRY_AUTH_TOKEN",
+    "SENTRY_PROJECT",
+    "VERCEL_ENV",
+    "VERCEL_GIT_COMMIT_SHA",
+    "VERCEL_URL"
+  ],
+  "tasks": {
+    "build": {
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**"
+      ]
+    },
+    "deploy": {
+      "dependsOn": [
+        "build"
+      ]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {},
+    "check-types": {}
+  }
+}

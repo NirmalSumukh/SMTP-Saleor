@@ -1,0 +1,45 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: saleor-app-smtp
+    restart: unless-stopped
+    image: saleor-app-smtp:latest
+    networks:
+      - proxy-network
+    environment:
+      - NODE_ENV=production
+      - PORT=3010
+      - SECRET_KEY=${SECRET_KEY}
+      - APP_LOG_LEVEL=info
+      # Allow installation on your specific domain
+      - ALLOWED_DOMAIN_PATTERN=^https://saleor\.leemasmart\.com$
+      # URL Configuration for Subpath
+      - APP_API_BASE_URL=https://saleor.leemasmart.com/smtp
+      # If you maintain a separate internal network for Saleor, 
+      # you might need to add it to 'networks' above and uncomment this:
+      # - SALEOR_API_URL=http://saleor-api:8000/graphql/
+
+    labels:
+      - "traefik.enable=true"
+
+      # Route: saleor.leemasmart.com/smtp
+      - "traefik.http.routers.smtp-app.rule=Host(`saleor.leemasmart.com`) && PathPrefix(`/smtp`)"
+      - "traefik.http.routers.smtp-app.entrypoints=websecure"
+      - "traefik.http.routers.smtp-app.tls=true"
+
+      # Cert Resolver: 'letsencrypt' (Matches your Traefik config)
+      - "traefik.http.routers.smtp-app.tls.certresolver=letsencrypt"
+
+      # Service Port: 3010
+      - "traefik.http.services.smtp-app.loadbalancer.server.port=3010"
+
+      # Docker Network: 'proxy-network' (Matches your Traefik config)
+      - "traefik.docker.network=proxy-network"
+
+networks:
+  proxy-network:
+    external: true
