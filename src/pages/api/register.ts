@@ -32,7 +32,7 @@ const logger = createLogger("createAppRegisterHandler");
 const baseHandler = wrapWithLoggerContext(
   withSpanAttributes(
     createAppRegisterHandler({
-    \r\n      apl: saleorApp.apl,
+      apl: saleorApp.apl,
       allowedSaleorUrls: [
         (url) => {
           if (allowedUrlsPattern) {
