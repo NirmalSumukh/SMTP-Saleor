@@ -16,7 +16,7 @@ services:
       - SECRET_KEY=${SECRET_KEY}
       - APP_LOG_LEVEL=info
       # Allow installation on your specific domain
-      - ALLOWED_DOMAIN_PATTERN=^https://saleor\.leemasmart\.com$
+      - ALLOWED_DOMAIN_PATTERN=${ALLOWED_DOMAIN_PATTERN}
       # URL Configuration for Subpath
       - APP_API_BASE_URL=https://saleor.leemasmart.com/smtp
       # If you maintain a separate internal network for Saleor, 
