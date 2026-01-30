@@ -29,10 +29,10 @@ const logger = createLogger("createAppRegisterHandler");
  * Required endpoint, called by Saleor to install app.
  * It will exchange tokens with app, so saleorApp.apl will contain token
  */
-export default wrapWithLoggerContext(
+const baseHandler = wrapWithLoggerContext(
   withSpanAttributes(
     createAppRegisterHandler({
-      apl: saleorApp.apl,
+    \r\n      apl: saleorApp.apl,
       allowedSaleorUrls: [
         (url) => {
           if (allowedUrlsPattern) {
@@ -57,21 +57,11 @@ export default wrapWithLoggerContext(
       async onRequestVerified(req, { authData: { token, saleorApiUrl }, respondWithError }) {
         const logger = createLogger("onRequestVerified");
 
-        /**
-         * Workaround: If Saleor reports HTTP, force HTTPS to avoid 308 Redirect issues in node-fetch
-         * which can cause the installation to fail if the app is behind the same proxy.
-         */
-        const secureSaleorApiUrl = saleorApiUrl.replace("http://", "https://");
-
-        if (saleorApiUrl !== secureSaleorApiUrl) {
-          logger.info({ saleorApiUrl, secureSaleorApiUrl }, "Upgrading Saleor API URL to HTTPS");
-        }
-
         let saleorVersion: string;
 
         try {
           const client = createInstrumentedGraphqlClient({
-            saleorApiUrl: secureSaleorApiUrl,
+            saleorApiUrl: saleorApiUrl,
             token: token,
           });
 
@@ -175,3 +165,20 @@ export default wrapWithLoggerContext(
   ),
   loggerContext,
 );
+
+/**
+ * Wrapper handler that normalizes the saleor-api-url header to HTTPS
+ * This is required because some reverse proxy configurations cause Saleor to send http:// instead of https://
+ */
+export default async function handler(req: any, res: any) {
+  const saleorApiUrl = req.headers["saleor-api-url"];
+
+  if (typeof saleorApiUrl === "string" && saleorApiUrl.startsWith("http://")) {
+    const httpsUrl = saleorApiUrl.replace("http://", "https://");
+
+    logger.info({ originalUrl: saleorApiUrl, rewrittenUrl: httpsUrl }, "Rewriting saleor-api-url header to HTTPS");
+    req.headers["saleor-api-url"] = httpsUrl;
+  }
+
+  return baseHandler(req, res);
+}
