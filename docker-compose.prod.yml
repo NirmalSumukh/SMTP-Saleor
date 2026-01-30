@@ -40,9 +40,6 @@ services:
       # Docker Network: 'proxy-network' (Matches your Traefik config)
       - "traefik.docker.network=proxy-network"
 
-    extra_hosts:
-      - "saleor.leemasmart.com:host-gateway"
-
 networks:
   proxy-network:
     external: true

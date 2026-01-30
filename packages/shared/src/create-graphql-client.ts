@@ -36,8 +36,8 @@ export const createGraphQLClient = ({ saleorApiUrl, token, opts }: CreateGraphQL
           addAuthToOperation(operation) {
             const headers: Record<string, string> = token
               ? {
-                  "Authorization-Bearer": token,
-                }
+                Authorization: `Bearer ${token}`,
+              }
               : {};
 
             return utils.appendHeaders(operation, headers);
@@ -45,7 +45,7 @@ export const createGraphQLClient = ({ saleorApiUrl, token, opts }: CreateGraphQL
           didAuthError(error) {
             return error.graphQLErrors.some((e) => e.extensions?.code === "FORBIDDEN");
           },
-          async refreshAuth() {},
+          async refreshAuth() { },
         };
       }),
       ...beforeFetch,
