@@ -37,7 +37,7 @@ const NoExistingConfigurations = ({
       padding={10}
       display="flex"
       flexDirection="column"
-      alignItems="flex-start"
+      alignItems="center"
       justifyContent="center"
     >
       {saleorCloudFallbackAvailable && saleorCloudSmtpHint}

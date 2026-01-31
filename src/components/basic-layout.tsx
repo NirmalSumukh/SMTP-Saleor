@@ -9,7 +9,7 @@ interface BasicLayoutProps {
 
 export const BasicLayout = ({ children, breadcrumbs, isLoading = false }: BasicLayoutProps) => {
   return (
-    <Box padding={7} display="grid" gap={10}>
+    <Box padding={6} display="grid" gap={10} backgroundColor="default1" __minHeight="100vh">
       {breadcrumbs?.length && (
         <Breadcrumbs>
           {breadcrumbs.map((breadcrumb) => (
