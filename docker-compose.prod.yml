@@ -20,9 +20,9 @@ services:
       - FILE_APL_PATH=data/.apl-data.json
       # Allow installation on your specific domain
       - ALLOWED_DOMAIN_PATTERN=${ALLOWED_DOMAIN_PATTERN}
-      # URL Configuration for Subpath
-      - APP_API_BASE_URL=https://saleor.leemasmart.com/smtp
-      - APP_IFRAME_BASE_URL=https://saleor.leemasmart.com/smtp
+      # URL Configuration
+      - APP_API_BASE_URL=https://smtp.leemasmart.com
+      - APP_IFRAME_BASE_URL=https://smtp.leemasmart.com
       # If you maintain a separate internal network for Saleor, 
       # you might need to add it to 'networks' above and uncomment this:
       # - SALEOR_API_URL=http://saleor-api:8000/graphql/
@@ -33,8 +33,8 @@ services:
     labels:
       - "traefik.enable=true"
 
-      # Route: saleor.leemasmart.com/smtp
-      - "traefik.http.routers.smtp-app.rule=Host(`saleor.leemasmart.com`) && PathPrefix(`/smtp`)"
+      # Route: smtp.leemasmart.com
+      - "traefik.http.routers.smtp-app.rule=Host(`smtp.leemasmart.com`)"
       - "traefik.http.routers.smtp-app.entrypoints=websecure"
       - "traefik.http.routers.smtp-app.tls=true"
 

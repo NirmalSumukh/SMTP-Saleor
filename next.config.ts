@@ -4,7 +4,6 @@ import { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   output: "standalone",
-  basePath: "/smtp",
   allowedDevOrigins: ["*.ngrok-free.app", "*.leemasmart.com"],
   transpilePackages: [
     "@saleor/apps-otel",
